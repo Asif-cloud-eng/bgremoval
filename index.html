@@ -1,423 +1,521 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Background Removal Tool</title>
-  <style>
-    /* General Styles */
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #6a11cb, #2575fc);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      margin: 0;
-      color: #333;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Background Removal Tool</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    .container {
-      background: rgba(255, 255, 255, 0.95);
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-      text-align: center;
-      max-width: 800px;
-      width: 100%;
-      animation: fadeIn 1s ease-in-out;
-    }
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background: linear-gradient(45deg, #1e1e2f, #2a4066);
+        }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+        /* Welcome Screen */
+        .welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: radial-gradient(circle, #0a0a23, #1e1e2f);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 1000;
+            animation: fadeInWelcome 1s ease-in;
+            overflow: hidden;
+        }
 
-    h1 {
-      margin-bottom: 20px;
-      color: #2575fc;
-      font-size: 2.5rem;
-      animation: slideIn 1s ease-in-out;
-    }
+        @keyframes fadeInWelcome {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
 
-    @keyframes slideIn {
-      from { transform: translateX(-100%); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
-    }
+        .space-scene {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-    /* Tabs Navigation */
-    .tabs {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 20px;
-    }
+        .sun {
+            position: absolute;
+            top: 10%;
+            left: 10%;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, #fff 10%, #ffeb3b 40%, transparent 70%);
+            border-radius: 50%;
+            box-shadow: 0 0 50px #ffeb3b, 0 0 100px #fff176;
+            animation: glowSun 2s infinite alternate;
+        }
 
-    .tabs button {
-      padding: 10px 20px;
-      margin: 0 10px;
-      border: none;
-      background: #2575fc;
-      color: white;
-      border-radius: 25px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-size: 1rem;
-    }
+        @keyframes glowSun {
+            from { box-shadow: 0 0 50px #ffeb3b, 0 0 100px #fff176; }
+            to { box-shadow: 0 0 70px #ffeb3b, 0 0 150px #fff176; }
+        }
 
-    .tabs button:hover {
-      background: #1a5bbf;
-      transform: translateY(-3px);
-    }
+        .earth {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/1024px-The_Earth_seen_from_Apollo_17.jpg') no-repeat center;
+            background-size: cover;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            animation: orbitEarth 20s infinite linear, strikeIn 2s ease-out;
+        }
 
-    .tabs button.active {
-      background: #1a5bbf;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    }
+        @keyframes orbitEarth {
+            0% { transform: translateX(-200px) translateY(0); }
+            25% { transform: translateX(0) translateY(-200px); }
+            50% { transform: translateX(200px) translateY(0); }
+            75% { transform: translateX(0) translateY(200px); }
+            100% { transform: translateX(-200px) translateY(0); }
+        }
 
-    /* Tab Content */
-    .tab-content {
-      display: none;
-      animation: fadeIn 0.5s ease-in-out;
-    }
+        @keyframes strikeIn {
+            0% { transform: scale(0) translateY(-100vh); opacity: 0; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); }
+        }
 
-    .tab-content.active {
-      display: block;
-    }
+        .photo-frame {
+            position: absolute;
+            width: 300px;
+            height: 200px;
+            background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') no-repeat center;
+            background-size: cover;
+            border: 5px solid #fff;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+            animation: photoFloat 3s infinite ease-in-out;
+            z-index: 10;
+        }
 
-    /* File Input */
-    input[type="file"] {
-      margin-bottom: 20px;
-      padding: 15px;
-      border: 2px dashed #2575fc;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      width: 80%;
-      font-size: 1rem;
-    }
+        @keyframes photoFloat {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0); }
+        }
 
-    input[type="file"]:hover {
-      background: #2575fc;
-      color: white;
-      border-color: #1a5bbf;
-    }
+        .welcome-text {
+            color: #fff;
+            font-size: 2.5rem;
+            margin-top: 20px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            animation: textGlow 2s infinite alternate;
+            z-index: 20;
+        }
 
-    /* Output Image */
-    #output-image {
-      margin-top: 20px;
-      max-width: 100%;
-      border-radius: 10px;
-      animation: zoomIn 0.5s ease-in-out;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    }
+        @keyframes textGlow {
+            from { text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+            to { text-shadow: 0 0 20px rgba(255, 255, 255, 0.8); }
+        }
 
-    @keyframes zoomIn {
-      from { transform: scale(0.9); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
+        .enter-btn {
+            margin-top: 30px;
+            padding: 15px 40px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border: none;
+            border-radius: 30px;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 20;
+        }
 
-    /* Loading Animation */
-    .loading {
-      display: none;
-      margin-top: 20px;
-      font-size: 1.2rem;
-      color: #2575fc;
-    }
+        .enter-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.7);
+        }
 
-    /* Download Options */
-    .download-options {
-      margin-top: 20px;
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
+        /* Main Container */
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+            animation: floatIn 1s ease-out;
+            position: relative;
+            overflow: hidden;
+            display: none;
+        }
 
-    .download-options button {
-      padding: 10px 20px;
-      background: linear-gradient(135deg, #2575fc, #1a5bbf);
-      color: white;
-      border: none;
-      border-radius: 25px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-size: 1rem;
-    }
+        @keyframes floatIn {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
 
-    .download-options button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
-    }
+        h1 {
+            color: #ff6b6b;
+            font-size: 2.8rem;
+            text-align: center;
+            animation: pulseTitle 2s infinite;
+        }
 
-    /* Contact Us Section */
-    .contact {
-      text-align: left;
-      background: #f9f9f9;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
+        @keyframes pulseTitle {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
 
-    .contact h2 {
-      margin-top: 0;
-      color: #2575fc;
-    }
+        /* Tabs */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            gap: 15px;
+        }
 
-    .contact p {
-      line-height: 1.6;
-      color: #555;
-    }
+        .tabs button {
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+            border: none;
+            border-radius: 30px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
 
-    /* About Section */
-    .about {
-      text-align: left;
-      background: #f9f9f9;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
+        .tabs button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.5);
+        }
 
-    .about h2 {
-      margin-top: 0;
-      color: #2575fc;
-    }
+        .tabs button.active {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            transform: scale(1.1);
+        }
 
-    .about p {
-      line-height: 1.6;
-      color: #555;
-    }
+        .tab-content {
+            display: none;
+            animation: slideUp 0.5s ease-in-out;
+        }
 
-    /* Feedback Section */
-    .feedback {
-      text-align: left;
-      background: #f9f9f9;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
+        .tab-content.active {
+            display: block;
+        }
 
-    .feedback h2 {
-      margin-top: 0;
-      color: #2575fc;
-    }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
 
-    .feedback textarea {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      font-size: 1rem;
-      margin-bottom: 10px;
-    }
+        /* Home Tab */
+        input[type="file"] {
+            width: 100%;
+            padding: 20px;
+            border: 3px dashed #4ecdc4;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.2);
+            font-size: 1.1rem;
+        }
 
-    .feedback button {
-      padding: 10px 20px;
-      background: #2575fc;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
+        input[type="file"]:hover {
+            border-color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.1);
+            transform: scale(1.02);
+        }
 
-    .feedback button:hover {
-      background: #1a5bbf;
-    }
+        #output-image {
+            max-width: 100%;
+            border-radius: 15px;
+            margin-top: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            animation: imagePop 0.5s ease-in;
+        }
 
-    .comment-view {
-      margin-top: 20px;
-      text-align: left;
-    }
+        @keyframes imagePop {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
 
-    .comment-view h3 {
-      color: #2575fc;
-    }
+        .loading {
+            display: none;
+            margin: 20px 0;
+            font-size: 1.3rem;
+            color: #4ecdc4;
+            animation: pulse 1s infinite;
+        }
 
-    .comment-view ul {
-      list-style: none;
-      padding: 0;
-    }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
 
-    .comment-view li {
-      background: white;
-      padding: 10px;
-      border-radius: 5px;
-      margin-bottom: 10px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
+        .download-options {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
 
-    /* Footer */
-    footer {
-      margin-top: 30px;
-      font-size: 0.9rem;
-      color: #666;
-    }
+        .download-options button {
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #feca57, #ff6b6b);
+            border: none;
+            border-radius: 30px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
 
-    footer strong {
-      color: #2575fc;
-    }
-  </style>
+        .download-options button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(254, 202, 87, 0.5);
+        }
+
+        /* Contact/About/Feedback */
+        .contact, .about, .feedback {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .contact h2, .about h2, .feedback h2 {
+            color: #ff6b6b;
+            margin-bottom: 15px;
+        }
+
+        .feedback textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #4ecdc4;
+            border-radius: 10px;
+            resize: none;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .feedback textarea:focus {
+            border-color: #ff6b6b;
+            box-shadow: 0 0 10px rgba(255, 107, 107, 0.3);
+        }
+
+        .feedback button {
+            margin-top: 15px;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+            border: none;
+            border-radius: 30px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .feedback button:hover {
+            background: linear-gradient(45deg, #45b7d1, #4ecdc4);
+            transform: translateY(-3px);
+        }
+
+        .comment-view li {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            animation: commentSlide 0.5s ease-in;
+        }
+
+        @keyframes commentSlide {
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #fff;
+            font-size: 1rem;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Background Removal Tool</h1>
-
-    <!-- Tabs Navigation -->
-    <div class="tabs">
-      <button onclick="openTab('home')" class="active">Home</button>
-      <button onclick="openTab('contact')">Contact Us</button>
-      <button onclick="openTab('about')">About</button>
-      <button onclick="openTab('feedback')">Feedback</button>
-    </div>
-
-    <!-- Home Tab -->
-    <div id="home" class="tab-content active">
-      <input type="file" id="image-input" accept="image/*" />
-      <div class="loading" id="loading">Processing... Please wait.</div>
-      <img id="output-image" src="#" alt="Output Image" style="display: none;" />
-
-      <!-- Download Options -->
-      <div class="download-options" id="download-options" style="display: none;">
-        <button onclick="downloadImage('4k')">Download 4K</button>
-        <button onclick="downloadImage('1080p')">Download 1080p</button>
-        <button onclick="downloadImage('720p')">Download 720p</button>
-        <button onclick="downloadImage('480p')">Download 480p</button>
-        <button onclick="downloadImage('360p')">Download 360p</button>
-        <button onclick="downloadImage('240p')">Download 240p</button>
-        <button onclick="downloadImage('144p')">Download 144p</button>
-      </div>
-    </div>
-
-    <!-- Contact Us Tab -->
-    <div id="contact" class="tab-content">
-      <div class="contact">
-        <h2>Contact Us</h2>
-        <p>If you have any questions or need support, feel free to reach out:</p>
-        <p><strong>Mobile:</strong> +91 9616173193</p>
-        <p><strong>Email:</strong> asifansari77@gmail.com</p>
-      </div>
-    </div>
-
-    <!-- About Tab -->
-    <div id="about" class="tab-content">
-      <div class="about">
-        <h2>About This Tool</h2>
-        <p>
-          This Background Removal Tool uses advanced AI technology to remove backgrounds from images seamlessly. 
-          Whether you're a designer, marketer, or just someone who loves editing photos, this tool is perfect for you. 
-          Upload your image, and let the tool do the rest! You can download the processed image instantly in various resolutions.
-        </p>
-      </div>
-    </div>
-
-    <!-- Feedback Tab -->
-    <div id="feedback" class="tab-content">
-      <div class="feedback">
-        <h2>Feedback</h2>
-        <textarea id="feedback-input" placeholder="Enter your feedback here..." rows="4"></textarea>
-        <button onclick="submitFeedback()">Submit Feedback</button>
-        <div class="comment-view">
-          <h3>Comments</h3>
-          <ul id="comment-list"></ul>
+    <!-- Welcome Screen -->
+    <div class="welcome-screen" id="welcomeScreen">
+        <div class="space-scene">
+            <div class="sun"></div>
+            <div class="earth"></div>
+            <div class="photo-frame"></div>
         </div>
-      </div>
+        <div class="welcome-text">Welcome to the Background Removal Tool!</div>
+        <button class="enter-btn" onclick="enterSite()">Enter Now</button>
     </div>
 
-    <!-- Footer -->
-    <footer>This is created by <strong>Asif Ansari</strong></footer>
-  </div>
+    <!-- Main Content -->
+    <div class="container" id="mainContent">
+        <h1>Background Removal Tool</h1>
 
-  <script>
-    // Tab Navigation
-    function openTab(tabName) {
-      const tabs = document.querySelectorAll('.tab-content');
-      tabs.forEach(tab => tab.classList.remove('active'));
+        <div class="tabs">
+            <button onclick="openTab('home')" class="active">Home</button>
+            <button onclick="openTab('contact')">Contact Us</button>
+            <button onclick="openTab('about')">About</button>
+            <button onclick="openTab('feedback')">Feedback</button>
+        </div>
 
-      const buttons = document.querySelectorAll('.tabs button');
-      buttons.forEach(button => button.classList.remove('active'));
+        <div id="home" class="tab-content active">
+            <input type="file" id="image-input" accept="image/*" />
+            <div class="loading" id="loading">Processing... Please wait.</div>
+            <img id="output-image" src="#" alt="Output Image" style="display: none;" />
+            <div class="download-options" id="download-options" style="display: none;">
+                <button onclick="downloadImage('4k')">4K</button>
+                <button onclick="downloadImage('1080p')">1080p</button>
+                <button onclick="downloadImage('720p')">720p</button>
+                <button onclick="downloadImage('480p')">480p</button>
+                <button onclick="downloadImage('360p')">360p</button>
+                <button onclick="downloadImage('240p')">240p</button>
+                <button onclick="downloadImage('144p')">144p</button>
+            </div>
+        </div>
 
-      document.getElementById(tabName).classList.add('active');
-      document.querySelector(`button[onclick="openTab('${tabName}')"]`).classList.add('active');
-    }
+        <div id="contact" class="tab-content">
+            <div class="contact">
+                <h2>Contact Us</h2>
+                <p>Need help? Reach out to us:</p>
+                <p><strong>Mobile:</strong> +91 9616173193</p>
+                <p><strong>Email:</strong> asifansari77@gmail.com</p>
+            </div>
+        </div>
 
-    // Feedback System
-    const feedbackList = [];
+        <div id="about" class="tab-content">
+            <div class="about">
+                <h2>About This Tool</h2>
+                <p>
+                    Experience the magic of AI-powered background removal! Perfect for designers, photographers, 
+                    and anyone who loves editing. Upload, process, and download in various resolutions with ease.
+                </p>
+            </div>
+        </div>
 
-    function submitFeedback() {
-      const feedbackInput = document.getElementById('feedback-input');
-      const commentList = document.getElementById('comment-list');
+        <div id="feedback" class="tab-content">
+            <div class="feedback">
+                <h2>Feedback</h2>
+                <textarea id="feedback-input" placeholder="Tell us what you think..." rows="4"></textarea>
+                <button onclick="submitFeedback()">Submit Feedback</button>
+                <div class="comment-view">
+                    <h3>Comments</h3>
+                    <ul id="comment-list"></ul>
+                </div>
+            </div>
+        </div>
 
-      if (feedbackInput.value.trim() === '') {
-        alert('Please enter your feedback!');
-        return;
-      }
+        <footer>Created by <strong>Asif Ansari</strong></footer>
+    </div>
 
-      feedbackList.push(feedbackInput.value);
-      commentList.innerHTML = feedbackList.map(feedback => `<li>${feedback}</li>`).join('');
-      feedbackInput.value = '';
-    }
+    <script>
+        // Welcome Screen and Speech
+        window.onload = () => {
+            const msg = new SpeechSynthesisUtterance("Welcome to the Background Removal Tool!");
+            msg.pitch = 1.2;
+            msg.rate = 1;
+            window.speechSynthesis.speak(msg);
+        };
 
-    // Background Removal Logic
-    const imageInput = document.getElementById('image-input');
-    const outputImage = document.getElementById('output-image');
-    const loading = document.getElementById('loading');
-    const downloadOptions = document.getElementById('download-options');
-
-    let processedImageUrl = '';
-
-    imageInput.addEventListener('change', async (event) => {
-      const file = event.target.files[0];
-      if (file) {
-        loading.style.display = 'block';
-        outputImage.style.display = 'none';
-        downloadOptions.style.display = 'none';
-
-        const formData = new FormData();
-        formData.append('image_file', file);
-
-        try {
-          // Replace with your Remove.bg API key
-          const apiKey = 'x2UYrF2zbn8dpVCTuSPKFk9k';
-          const response = await fetch('https://api.remove.bg/v1.0/removebg', {
-            method: 'POST',
-            headers: {
-              'X-Api-Key': apiKey,
-            },
-            body: formData,
-          });
-
-          if (!response.ok) {
-            throw new Error('Failed to remove background');
-          }
-
-          const blob = await response.blob();
-          processedImageUrl = URL.createObjectURL(blob);
-          outputImage.src = processedImageUrl;
-          outputImage.style.display = 'block';
-          downloadOptions.style.display = 'flex';
-        } catch (error) {
-          console.error('Error:', error);
-          alert('An error occurred while removing the background.');
-        } finally {
-          loading.style.display = 'none';
+        function enterSite() {
+            const welcomeScreen = document.getElementById('welcomeScreen');
+            const mainContent = document.getElementById('mainContent');
+            welcomeScreen.style.animation = 'fadeOut 0.5s ease-out forwards';
+            setTimeout(() => {
+                welcomeScreen.style.display = 'none';
+                mainContent.style.display = 'block';
+            }, 500);
         }
-      }
-    });
 
-    // Download Image with Quality
-    function downloadImage(quality) {
-      if (!processedImageUrl) {
-        alert('No image available to download.');
-        return;
-      }
+        // Tab Navigation
+        function openTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tabs button').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            document.querySelector(`button[onclick="openTab('${tabName}')"]`).classList.add('active');
+        }
 
-      const link = document.createElement('a');
-      link.href = processedImageUrl;
-      link.download = `background-removed-image-${quality}.png`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-  </script>
+        // Feedback System
+        const feedbackList = [];
+        function submitFeedback() {
+            const feedbackInput = document.getElementById('feedback-input');
+            const commentList = document.getElementById('comment-list');
+            if (feedbackInput.value.trim()) {
+                feedbackList.push(feedbackInput.value);
+                commentList.innerHTML = feedbackList.map(f => `<li>${f}</li>`).join('');
+                feedbackInput.value = '';
+            } else {
+                alert('Please enter feedback!');
+            }
+        }
+
+        // Background Removal
+        const imageInput = document.getElementById('image-input');
+        const outputImage = document.getElementById('output-image');
+        const loading = document.getElementById('loading');
+        const downloadOptions = document.getElementById('download-options');
+        let processedImageUrl = '';
+
+        imageInput.addEventListener('change', async (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                loading.style.display = 'block';
+                outputImage.style.display = 'none';
+                downloadOptions.style.display = 'none';
+
+                const formData = new FormData();
+                formData.append('image_file', file);
+
+                try {
+                    const apiKey = 'x2UYrF2zbn8dpVCTuSPKFk9k'; // Replace with your Remove.bg API key
+                    const response = await fetch('https://api.remove.bg/v1.0/removebg', {
+                        method: 'POST',
+                        headers: { 'X-Api-Key': apiKey },
+                        body: formData,
+                    });
+
+                    if (!response.ok) throw new Error('Failed to process image');
+                    const blob = await response.blob();
+                    processedImageUrl = URL.createObjectURL(blob);
+                    outputImage.src = processedImageUrl;
+                    outputImage.style.display = 'block';
+                    downloadOptions.style.display = 'flex';
+                } catch (error) {
+                    console.error(error);
+                    alert('Error processing image!');
+                } finally {
+                    loading.style.display = 'none';
+                }
+            }
+        });
+
+        // Download Function
+        function downloadImage(quality) {
+            if (processedImageUrl) {
+                const link = document.createElement('a');
+                link.href = processedImageUrl;
+                link.download = `processed-image-${quality}.png`;
+                link.click();
+            } else {
+                alert('No image to download!');
+            }
+        }
+    </script>
 </body>
 </html>
