@@ -18,6 +18,25 @@
             background: linear-gradient(45deg, #1e1e2f, #2a4066);
         }
 
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #feca57);
+            padding: 10px 0;
+            z-index: 700;
+            overflow: hidden;
+        }
+
+        .header marquee {
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
         /* Welcome Screen */
         .welcome-screen {
             position: fixed;
@@ -32,7 +51,6 @@
             flex-direction: column;
             z-index: 1000;
             animation: fadeInWelcome 1s ease-in;
-            overflow: hidden;
         }
 
         @keyframes fadeInWelcome {
@@ -41,7 +59,7 @@
         }
 
         .space-scene {
-            position: relative;
+            position: absolute;
             width: 100%;
             height: 100%;
             display: flex;
@@ -53,8 +71,8 @@
             position: absolute;
             top: 10%;
             left: 10%;
-            width: 100px;
-            height: 100px;
+            width: 80px;
+            height: 80px;
             background: radial-gradient(circle, #fff 10%, #ffeb3b 40%, transparent 70%);
             border-radius: 50%;
             box-shadow: 0 0 50px #ffeb3b, 0 0 100px #fff176;
@@ -68,8 +86,8 @@
 
         .earth {
             position: absolute;
-            width: 150px;
-            height: 150px;
+            width: 120px;
+            height: 120px;
             background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/1024px-The_Earth_seen_from_Apollo_17.jpg') no-repeat center;
             background-size: cover;
             border-radius: 50%;
@@ -78,11 +96,11 @@
         }
 
         @keyframes orbitEarth {
-            0% { transform: translateX(-200px) translateY(0); }
-            25% { transform: translateX(0) translateY(-200px); }
-            50% { transform: translateX(200px) translateY(0); }
-            75% { transform: translateX(0) translateY(200px); }
-            100% { transform: translateX(-200px) translateY(0); }
+            0% { transform: translateX(-150px) translateY(0); }
+            25% { transform: translateX(0) translateY(-150px); }
+            50% { transform: translateX(150px) translateY(0); }
+            75% { transform: translateX(0) translateY(150px); }
+            100% { transform: translateX(-150px) translateY(0); }
         }
 
         @keyframes strikeIn {
@@ -93,8 +111,8 @@
 
         .photo-frame {
             position: absolute;
-            width: 300px;
-            height: 200px;
+            width: 250px;
+            height: 150px;
             background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') no-repeat center;
             background-size: cover;
             border: 5px solid #fff;
@@ -106,17 +124,18 @@
 
         @keyframes photoFloat {
             0% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+            50% { transform: translateY(-15px); }
             100% { transform: translateY(0); }
         }
 
         .welcome-text {
             color: #fff;
-            font-size: 2.5rem;
+            font-size: 2rem;
             margin-top: 20px;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
             animation: textGlow 2s infinite alternate;
             z-index: 20;
+            text-align: center;
         }
 
         @keyframes textGlow {
@@ -125,13 +144,13 @@
         }
 
         .enter-btn {
-            margin-top: 30px;
-            padding: 15px 40px;
+            margin-top: 20px;
+            padding: 12px 30px;
             background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
             border: none;
-            border-radius: 30px;
+            border-radius: 25px;
             color: white;
-            font-size: 1.2rem;
+            font-size: 1rem;
             cursor: pointer;
             transition: all 0.3s ease;
             z-index: 20;
@@ -142,18 +161,140 @@
             box-shadow: 0 0 20px rgba(255, 107, 107, 0.7);
         }
 
+        /* Privacy Policy Popup */
+        .privacy-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .privacy-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .privacy-content h2 {
+            color: #ff6b6b;
+            margin-bottom: 15px;
+        }
+
+        .privacy-content p {
+            font-size: 0.9rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .privacy-content button {
+            padding: 10px 20px;
+            background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+            border: none;
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .privacy-content button:hover {
+            transform: scale(1.1);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 60px; /* Adjusted for header */
+            left: -250px;
+            width: 250px;
+            height: 100%;
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4, #feca57);
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+            transition: left 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* More fluid animation */
+            z-index: 500;
+        }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 20px;
+        }
+
+        .sidebar ul li {
+            margin: 20px 0;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            display: block;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .sidebar ul li a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(10px);
+        }
+
+        .menu-btn {
+            position: fixed;
+            top: 70px; /* Adjusted for header */
+            left: 20px;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            z-index: 600;
+        }
+
+        /* Buffering Circle */
+        .buffering {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 50px;
+            height: 50px;
+            border: 5px solid #ff6b6b;
+            border-top: 5px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
         /* Main Container */
         .container {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 30px;
+            max-width: 1000px;
+            margin: 80px auto 20px; /* Adjusted for header */
+            padding: 20px;
             background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
             animation: floatIn 1s ease-out;
-            position: relative;
-            overflow: hidden;
             display: none;
+            min-height: calc(100vh - 100px);
         }
 
         @keyframes floatIn {
@@ -163,8 +304,9 @@
 
         h1 {
             color: #ff6b6b;
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             text-align: center;
+            margin-bottom: 20px;
             animation: pulseTitle 2s infinite;
         }
 
@@ -174,36 +316,10 @@
             100% { transform: scale(1); }
         }
 
-        /* Tabs */
-        .tabs {
-            display: flex;
-            justify-content: center;
-            margin: 20px 0;
-            gap: 15px;
-        }
-
-        .tabs button {
-            padding: 12px 25px;
-            background: linear-gradient(45deg, #4ecdc4, #45b7d1);
-            border: none;
-            border-radius: 30px;
-            color: white;
-            cursor: pointer;
-            transition: all 0.4s ease;
-        }
-
-        .tabs button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.5);
-        }
-
-        .tabs button.active {
-            background: linear-gradient(45deg, #ff6b6b, #feca57);
-            transform: scale(1.1);
-        }
-
+        /* Tab Content */
         .tab-content {
             display: none;
+            padding: 20px;
             animation: slideUp 0.5s ease-in-out;
         }
 
@@ -216,29 +332,69 @@
             to { transform: translateY(0); opacity: 1; }
         }
 
+        /* About Tab */
+        .about-images {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .about-images img {
+            width: 200px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .about-images img:hover {
+            transform: scale(1.05);
+        }
+
+        .instructions {
+            margin-top: 50px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .instructions h2 {
+            color: #ff6b6b;
+            margin-bottom: 15px;
+        }
+
+        .instructions p {
+            font-size: 1rem;
+            color: #333;
+            line-height: 1.5;
+        }
+
         /* Home Tab */
         input[type="file"] {
             width: 100%;
-            padding: 20px;
+            padding: 15px;
             border: 3px dashed #4ecdc4;
-            border-radius: 15px;
+            border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s ease;
             background: rgba(255, 255, 255, 0.2);
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
 
         input[type="file"]:hover {
             border-color: #ff6b6b;
             background: rgba(255, 107, 107, 0.1);
-            transform: scale(1.02);
         }
 
         #output-image {
             max-width: 100%;
-            border-radius: 15px;
-            margin-top: 20px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            margin-top: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
             animation: imagePop 0.5s ease-in;
         }
 
@@ -249,9 +405,10 @@
 
         .loading {
             display: none;
-            margin: 20px 0;
-            font-size: 1.3rem;
+            margin: 15px 0;
+            font-size: 1.2rem;
             color: #4ecdc4;
+            text-align: center;
             animation: pulse 1s infinite;
         }
 
@@ -262,47 +419,72 @@
         }
 
         .download-options {
-            margin-top: 25px;
+            margin-top: 20px;
             display: flex;
-            justify-content: center;
-            gap: 15px;
+            justify-content:Maria: center;
+            gap: 10px;
             flex-wrap: wrap;
         }
 
         .download-options button {
-            padding: 12px 25px;
+            padding: 10px 20px;
             background: linear-gradient(45deg, #feca57, #ff6b6b);
             border: none;
-            border-radius: 30px;
+            border-radius: 25px;
             color: white;
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
         .download-options button:hover {
-            transform: scale(1.1);
+            transform: scale(1.05);
             box-shadow: 0 5px 15px rgba(254, 202, 87, 0.5);
         }
 
-        /* Contact/About/Feedback */
-        .contact, .about, .feedback {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 0.5s ease-in;
+        /* Scroll to Tool Button */
+        .scroll-to-tool {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 0.9rem;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
+            transition: all 0.3s ease;
+            z-index: 600;
         }
 
-        .contact h2, .about h2, .feedback h2 {
+        .scroll-to-tool:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.8);
+        }
+
+        /* Other Sections */
+        .contact, .about, .feedback, .services, .faq, .terms {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact h2, .about h2, .feedback h2, .services h2, .faq h2, .terms h2 {
             color: #ff6b6b;
             margin-bottom: 15px;
         }
 
         .feedback textarea {
             width: 100%;
-            padding: 15px;
+            padding: 10px;
             border: 2px solid #4ecdc4;
-            border-radius: 10px;
+            border-radius: 8px;
             resize: none;
             font-size: 1rem;
             transition: all 0.3s ease;
@@ -314,11 +496,11 @@
         }
 
         .feedback button {
-            margin-top: 15px;
-            padding: 12px 25px;
+            margin-top: 10px;
+            padding: 10px 20px;
             background: linear-gradient(45deg, #4ecdc4, #45b7d1);
             border: none;
-            border-radius: 30px;
+            border-radius: 25px;
             color: white;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -331,8 +513,8 @@
 
         .comment-view li {
             background: rgba(255, 255, 255, 0.8);
-            padding: 15px;
-            border-radius: 10px;
+            padding: 10px;
+            border-radius: 8px;
             margin: 10px 0;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
             animation: commentSlide 0.5s ease-in;
@@ -345,14 +527,72 @@
 
         footer {
             text-align: center;
-            margin-top: 30px;
+            margin-top: 20px;
             color: #fff;
-            font-size: 1rem;
+            font-size: 0.9rem;
             text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+            padding-bottom: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                margin: 60px 10px 10px;
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .welcome-text {
+                font-size: 1.5rem;
+            }
+
+            .sun {
+                width: 60px;
+                height: 60px;
+            }
+
+            .earth {
+                width: 100px;
+                height: 100px;
+            }
+
+            .photo-frame {
+                width: 200px;
+                height: 120px;
+            }
+
+            .enter-btn {
+                padding: 10px 25px;
+                font-size: 0.9rem;
+            }
+
+            .download-options button {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+
+            .about-images img {
+                width: 150px;
+                height: 100px;
+            }
+
+            .scroll-to-tool {
+                width: 50px;
+                height: 50px;
+                font-size: 0.8rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
+    <div class="header">
+        <marquee>ASIF NOVITECH STARTUP</marquee>
+    </div>
+
     <!-- Welcome Screen -->
     <div class="welcome-screen" id="welcomeScreen">
         <div class="space-scene">
@@ -361,21 +601,45 @@
             <div class="photo-frame"></div>
         </div>
         <div class="welcome-text">Welcome to the Background Removal Tool!</div>
-        <button class="enter-btn" onclick="enterSite()">Enter Now</button>
+        <button class="enter-btn" onclick="showPrivacyPopup()">Enter Now</button>
     </div>
+
+    <!-- Privacy Policy Popup -->
+    <div class="privacy-popup" id="privacyPopup" style="display: none;">
+        <div class="privacy-content">
+            <h2>Privacy Policy</h2>
+            <p>
+                We value your privacy. This tool processes your images securely and does not store them after processing. By using this site, you agree to our terms and conditions. For more details, visit our Terms page.
+            </p>
+            <button onclick="acceptPrivacy()">Accept & Proceed</button>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+    <div class="sidebar" id="sidebar">
+        <ul>
+            <li><a href="#" onclick="showBuffering('home')">Home</a></li>
+            <li><a href="#" onclick="showBuffering('contact')">Contact Us</a></li>
+            <li><a href="#" onclick="showBuffering('about')">About Us</a></li>
+            <li><a href="#" onclick="showBuffering('feedback')">Feedback</a></li>
+            <li><a href="#" onclick="showBuffering('services')">Services</a></li>
+            <li><a href="#" onclick="showBuffering('faq')">FAQ</a></li>
+            <li><a href="#" onclick="showBuffering('terms')">Terms & Privacy</a></li>
+        </ul>
+    </div>
+
+    <!-- Buffering Circle -->
+    <div class="buffering" id="buffering"></div>
+
+    <!-- Scroll to Tool Button -->
+    <div class="scroll-to-tool" onclick="showBufferingScroll()">Use BG Removal Tool</div>
 
     <!-- Main Content -->
     <div class="container" id="mainContent">
         <h1>Background Removal Tool</h1>
 
-        <div class="tabs">
-            <button onclick="openTab('home')" class="active">Home</button>
-            <button onclick="openTab('contact')">Contact Us</button>
-            <button onclick="openTab('about')">About</button>
-            <button onclick="openTab('feedback')">Feedback</button>
-        </div>
-
-        <div id="home" class="tab-content active">
+        <div id="home" class="tab-content">
             <input type="file" id="image-input" accept="image/*" />
             <div class="loading" id="loading">Processing... Please wait.</div>
             <img id="output-image" src="#" alt="Output Image" style="display: none;" />
@@ -399,12 +663,24 @@
             </div>
         </div>
 
-        <div id="about" class="tab-content">
+        <div id="about" class="tab-content active">
             <div class="about">
-                <h2>About This Tool</h2>
+                <h2>About Us</h2>
                 <p>
-                    Experience the magic of AI-powered background removal! Perfect for designers, photographers, 
-                    and anyone who loves editing. Upload, process, and download in various resolutions with ease.
+                    We are a team dedicated to providing innovative AI tools for creatives. Our Background Removal Tool is designed to simplify your editing process with cutting-edge technology.
+                </p>
+                <div class="about-images">
+                    <img src="https://images.unsplash.com/photo-1501854140801-50d01698902b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Nature">
+                    <img src="https://images.unsplash.com/photo-1519125323398-675f1f1dcdf8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="City">
+                    <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c221e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Landscape">
+                    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Beach">
+                    <img src="https://images.unsplash.com/photo-1480714378408-67cf0d13e820?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Portrait">
+                </div>
+            </div>
+            <div class="instructions">
+                <h2>How to Use the Background Removal Tool</h2>
+                <p>
+                    Scroll down to the "Home" section or click the "Use BG Removal Tool" button on the right. Upload your image by clicking the file input area, and our AI will remove the background for you. Once processed, download your image in your preferred resolution (4K, 1080p, etc.).
                 </p>
             </div>
         </div>
@@ -421,7 +697,49 @@
             </div>
         </div>
 
-        <footer>Created by <strong>Asif Ansari</strong></footer>
+        <div id="services" class="tab-content">
+            <div class="services">
+                <h2>Our Services</h2>
+                <p>- AI-powered background removal</p>
+                <p>- Multiple resolution downloads</p>
+                <p>- Fast and secure processing</p>
+            </div>
+        </div>
+
+        <div id="faq" class="tab-content">
+            <div class="faq">
+                <h2>FAQ</h2>
+                <p><strong>Q: Is my image stored?</strong></p>
+                <p>A: No, images are deleted after processing.</p>
+                <p><strong>Q: What formats are supported?</strong></p>
+                <p>A: All common image formats (JPEG, PNG, etc.).</p>
+                <p><strong>Q: How long does processing take?</strong></p>
+                <p>A: Usually under 10 seconds, depending on server load.</p>
+                <p><strong>Q: Can I use this tool for commercial purposes?</strong></p>
+                <p>A: Yes, but ensure you have rights to the images you upload.</p>
+                <p><strong>Q: What if I encounter an error?</strong></p>
+                <p>A: Please contact us via the "Contact Us" section.</p>
+                <p><strong>Q: Is there a limit on image size?</strong></p>
+                <p>A: Yes, the maximum file size is 8MB.</p>
+                <p><strong>Q: Can I use this tool on mobile?</strong></p>
+                <p>A: Yes, the tool is mobile-friendly.</p>
+                <p><strong>Q: Do I need to create an account?</strong></p>
+                <p>A: No account is needed; just upload your image.</p>
+                <p><strong>Q: Is there a cost for using this tool?</strong></p>
+                <p>A: The tool is free to use, but we may introduce premium features in the future.</p>
+            </div>
+        </div>
+
+        <div id="terms" class="tab-content">
+            <div class="terms">
+                <h2>Terms & Privacy</h2>
+                <p>
+                    By using this tool, you agree not to upload copyrighted material without permission. We do not store your images or personal data beyond the session.
+                </p>
+            </div>
+        </div>
+
+        <footer>ASIF ANSARI © Copyright Protected 2025</footer>
     </div>
 
     <script>
@@ -433,7 +751,12 @@
             window.speechSynthesis.speak(msg);
         };
 
-        function enterSite() {
+        function showPrivacyPopup() {
+            document.getElementById('privacyPopup').style.display = 'flex';
+        }
+
+        function acceptPrivacy() {
+            document.getElementById('privacyPopup').style.display = 'none';
             const welcomeScreen = document.getElementById('welcomeScreen');
             const mainContent = document.getElementById('mainContent');
             welcomeScreen.style.animation = 'fadeOut 0.5s ease-out forwards';
@@ -443,12 +766,39 @@
             }, 500);
         }
 
-        // Tab Navigation
+        // Sidebar Toggle
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
+
+        // Buffering and Tab Navigation
+        function showBuffering(tabName) {
+            const buffering = document.getElementById('buffering');
+            buffering.style.display = 'block';
+            setTimeout(() => {
+                buffering.style.display = 'none';
+                openTab(tabName);
+                toggleSidebar();
+            }, 1000);
+        }
+
+        function showBufferingScroll() {
+            const buffering = document.getElementById('buffering');
+            buffering.style.display = 'block';
+            setTimeout(() => {
+                buffering.style.display = 'none';
+                scrollToTool();
+            }, 1000);
+        }
+
         function openTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.tabs button').forEach(btn => btn.classList.remove('active'));
             document.getElementById(tabName).classList.add('active');
-            document.querySelector(`button[onclick="openTab('${tabName}')"]`).classList.add('active');
+        }
+
+        function scrollToTool() {
+            openTab('home');
+            document.getElementById('home').scrollIntoView({ behavior: 'smooth' });
         }
 
         // Feedback System
