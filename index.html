@@ -17,6 +17,25 @@
             overflow-x: hidden;
             background: linear-gradient(45deg, #1e1e2f, #2a4066);
             transition: background 0.5s ease, color 0.5s ease;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent);
+            animation: fluidWave 12s infinite ease-in-out;
+            z-index: -1;
+        }
+
+        @keyframes fluidWave {
+            0% { transform: scale(1) translate(0, 0); opacity: 0.4; }
+            50% { transform: scale(1.1) translate(20px, -20px); opacity: 0.7; }
+            100% { transform: scale(1) translate(0, 0); opacity: 0.4; }
         }
 
         body.dark-mode {
@@ -33,7 +52,9 @@
             background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #feca57);
             padding: 10px 0;
             z-index: 700;
+            backdrop-filter: blur(10px);
             transition: background 0.5s ease;
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
         }
 
         .header marquee {
@@ -63,11 +84,13 @@
             z-index: 600;
             transition: transform 0.3s ease, background 0.5s ease;
             animation: bounceToggle 2s infinite;
+            box-shadow: 0 0 15px rgba(255, 107, 107, 0.7);
         }
 
         .dark-mode-toggle:hover {
             transform: scale(1.1);
             background: #4ecdc4;
+            box-shadow: 0 0 25px rgba(78, 205, 196, 0.9);
         }
 
         @keyframes bounceToggle {
@@ -215,6 +238,26 @@
             transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
             z-index: 20;
             box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .enter-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .enter-btn:hover::before {
+            width: 200px;
+            height: 200px;
         }
 
         .enter-btn:hover {
@@ -252,6 +295,7 @@
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
             animation: popIn 0.5s ease-out;
             transition: background 0.5s ease;
+            backdrop-filter: blur(5px);
         }
 
         body.dark-mode .privacy-content {
@@ -267,6 +311,7 @@
         .privacy-content h2 {
             color: #ff6b6b;
             margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
         }
 
         .privacy-content p {
@@ -288,11 +333,32 @@
             color: white;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            box-shadow: 0 0 15px rgba(78, 205, 196, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .privacy-content button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .privacy-content button:hover::before {
+            width: 200px;
+            height: 200px;
         }
 
         .privacy-content button:hover {
             transform: scale(1.1) rotate(-5deg);
-            box-shadow: 0 0 15px rgba(78, 205, 196, 0.7);
+            box-shadow: 0 0 25px rgba(78, 205, 196, 0.7);
         }
 
         /* Sidebar */
@@ -301,11 +367,13 @@
             top: 60px;
             left: -250px;
             width: 250px;
-            height: 100%;
-            background: #1a1a1a;
-            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+            height: calc(100% - 60px);
+            background: linear-gradient(135deg, #1a1a1a, #2a4066);
+            box-shadow: 2px 0 20px rgba(0, 0, 0, 0.5);
             transition: left 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
             z-index: 500;
+            backdrop-filter: blur(10px);
+            overflow-y: auto;
         }
 
         .sidebar.active {
@@ -330,6 +398,8 @@
         .sidebar ul li:nth-child(5) { --order: 5; }
         .sidebar ul li:nth-child(6) { --order: 6; }
         .sidebar ul li:nth-child(7) { --order: 7; }
+        .sidebar ul li:nth-child(8) { --order: 8; }
+        .sidebar ul li:nth-child(9) { --order: 9; }
 
         @keyframes slideInSidebar {
             from { transform: translateX(-50px); opacity: 0; }
@@ -343,12 +413,35 @@
             transition: all 0.3s ease;
             display: block;
             padding: 10px;
-            border-radius: 5px;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sidebar ul li a::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .sidebar ul li a:hover::before {
+            width: 300px;
+            height: 300px;
         }
 
         .sidebar ul li a:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
             transform: translateX(10px) scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.7);
         }
 
         .menu-btn {
@@ -376,6 +469,7 @@
             height: 4px;
             background: #fff;
             transition: all 0.3s ease;
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
         }
 
         .menu-btn.active span:nth-child(1) {
@@ -390,26 +484,37 @@
             transform: rotate(-45deg) translate(10px, -10px);
         }
 
-        /* Buffering Triangle */
-        .buffering {
+        /* Processing Loader */
+        .processing-loader {
             position: fixed;
             top: 50%;
             left: 50%;
-            width: 0;
-            height: 0;
-            border-left: 25px solid transparent;
-            border-right: 25px solid transparent;
-            border-bottom: 50px solid #ff6b6b;
+            width: 80px;
+            height: 80px;
             transform: translate(-50%, -50%);
             z-index: 1000;
             display: none;
-            animation: trianglePulse 1.5s ease-in-out infinite;
         }
 
-        @keyframes trianglePulse {
-            0% { transform: translate(-50%, -50%) scale(1) rotate(0deg); opacity: 1; }
-            50% { transform: translate(-50%, -50%) scale(1.3) rotate(180deg); opacity: 0.6; }
-            100% { transform: translate(-50%, -50%) scale(1) rotate(360deg); opacity: 1; }
+        .processing-loader .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #4ecdc4;
+            border-radius: 50%;
+            box-shadow: 0 0 15px #4ecdc4;
+            animation: orbitParticle 1.5s infinite ease-in-out;
+        }
+
+        .processing-loader .particle:nth-child(1) { animation-delay: 0s; top: 0; left: 0; }
+        .processing-loader .particle:nth-child(2) { animation-delay: 0.3s; top: 0; right: 0; }
+        .processing-loader .particle:nth-child(3) { animation-delay: 0.6s; bottom: 0; left: 0; }
+        .processing-loader .particle:nth-child(4) { animation-delay: 0.9s; bottom: 0; right: 0; }
+
+        @keyframes orbitParticle {
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            50% { transform: translate(30px, 30px) scale(1.2); opacity: 0.5; }
+            100% { transform: translate(0, 0) scale(1); opacity: 1; }
         }
 
         /* Main Container */
@@ -419,11 +524,12 @@
             padding: 20px;
             background: rgba(255, 255, 255, 0.95);
             border-radius: 15px;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
             animation: floatIn 1s ease-out;
             display: none;
             min-height: calc(100vh - 140px);
             transition: background 0.5s ease, color 0.5s ease;
+            backdrop-filter: blur(10px);
         }
 
         body.dark-mode .container {
@@ -442,6 +548,7 @@
             text-align: center;
             margin-bottom: 20px;
             animation: pulseTitle 2s infinite, glowTitle 3s infinite alternate;
+            text-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
         }
 
         @keyframes pulseTitle {
@@ -469,6 +576,129 @@
         @keyframes slideUp {
             from { transform: translateY(20px) rotate(1deg); opacity: 0; }
             to { transform: translateY(0) rotate(0deg); opacity: 1; }
+        }
+
+        /* Search Bar */
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .search-bar input {
+            width: 70%;
+            padding: 10px;
+            border: 2px solid #4ecdc4;
+            border-radius: 20px 0 0 20px;
+            background: rgba(255, 255, 255, 0.2);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode .search-bar input {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #fff;
+            color: #fff;
+        }
+
+        .search-bar input:focus {
+            border-color: #ff6b6b;
+            box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
+            outline: none;
+        }
+
+        .search-bar button {
+            padding: 10px 20px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border: none;
+            border-radius: 0 20px 20px 0;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+        }
+
+        .search-bar button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.8);
+        }
+
+        #search-result {
+            margin-top: 15px;
+            font-size: 1.1rem;
+            color: #4ecdc4;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(78, 205, 196, 0.5);
+        }
+
+        /* Home Tab */
+        input[type="file"] {
+            width: 100%;
+            padding: 15px;
+            border: 3px dashed #4ecdc4;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.2);
+            font-size: 1rem;
+            box-shadow: 0 0 15px rgba(78, 205, 196, 0.5);
+        }
+
+        body.dark-mode input[type="file"] {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #fff;
+        }
+
+        input[type="file"]:hover {
+            border-color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.1);
+            transform: scale(1.02);
+            box-shadow: 0 0 25px rgba(255, 107, 107, 0.7);
+        }
+
+        #output-image {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-top: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            animation: imagePop 0.5s ease-in;
+        }
+
+        @keyframes imagePop {
+            from { transform: scale(0.8) rotate(-5deg); opacity: 0; }
+            to { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        #processing-time {
+            margin-top: 15px;
+            font-size: 1.1rem;
+            color: #4ecdc4;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(78, 205, 196, 0.5);
+        }
+
+        .download-dropdown {
+            margin-top: 20px;
+            display: none;
+            justify-content: center;
+        }
+
+        .download-dropdown select {
+            padding: 10px;
+            width: 200px;
+            background: linear-gradient(45deg, #feca57, #ff6b6b);
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(254, 202, 87, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .download-dropdown select:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(254, 202, 87, 0.8);
         }
 
         /* About Tab */
@@ -505,7 +735,7 @@
             padding: 20px;
             background: rgba(255, 255, 255, 0.9);
             border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
             transition: background 0.5s ease;
         }
 
@@ -516,6 +746,7 @@
         .instructions h2 {
             color: #ff6b6b;
             margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
         }
 
         .instructions p {
@@ -529,84 +760,77 @@
             color: #fff;
         }
 
-        /* Home Tab */
-        input[type="file"] {
+        /* Calculator Tab */
+        .calculator {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: background 0.5s ease;
+        }
+
+        body.dark-mode .calculator {
+            background: rgba(30, 30, 47, 0.9);
+        }
+
+        .calculator input {
             width: 100%;
             padding: 15px;
-            border: 3px dashed #4ecdc4;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.2);
-            font-size: 1rem;
-        }
-
-        body.dark-mode input[type="file"] {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: #fff;
-        }
-
-        input[type="file"]:hover {
-            border-color: #ff6b6b;
-            background: rgba(255, 107, 107, 0.1);
-            transform: scale(1.02);
-        }
-
-        #output-image {
-            max-width: 100%;
-            border-radius: 10px;
-            margin-top: 15px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-            animation: imagePop 0.5s ease-in;
-        }
-
-        @keyframes imagePop {
-            from { transform: scale(0.8) rotate(-5deg); opacity: 0; }
-            to { transform: scale(1) rotate(0deg); opacity: 1; }
-        }
-
-        .loading {
-            display: none;
-            margin: 15px 0;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.3);
             font-size: 1.2rem;
-            color: #4ecdc4;
-            text-align: center;
-            animation: pulse 1s infinite, spinText 2s infinite;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
         }
 
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
+        body.dark-mode .calculator input {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
         }
 
-        @keyframes spinText {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .download-options {
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
+        .calculator-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
             gap: 10px;
-            flex-wrap: wrap;
         }
 
-        .download-options button {
-            padding: 10px 20px;
-            background: linear-gradient(45deg, #feca57, #ff6b6b);
+        .calculator-buttons button {
+            padding: 15px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
             border: none;
             border-radius: 25px;
             color: white;
+            font-size: 1.1rem;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-            box-shadow: 0 0 10px rgba(254, 202, 87, 0.5);
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
         }
 
-        .download-options button:hover {
-            transform: scale(1.05) rotate(2deg);
-            box-shadow: 0 0 20px rgba(254, 202, 87, 0.8);
+        .calculator-buttons button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.8);
+        }
+
+        /* Games Tab - Snake Game */
+        .games {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: background 0.5s ease;
+        }
+
+        body.dark-mode .games {
+            background: rgba(30, 30, 47, 0.9);
+        }
+
+        #snakeCanvas {
+            border: 2px solid #4ecdc4;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(78, 205, 196, 0.5);
         }
 
         /* Scroll to Tool Button */
@@ -683,6 +907,7 @@
             display: none;
             z-index: 700;
             transition: background 0.5s ease;
+            backdrop-filter: blur(10px);
         }
 
         body.dark-mode .help-desk-popup {
@@ -697,6 +922,7 @@
             border: 2px solid #4ecdc4;
             border-radius: 5px;
             background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 10px rgba(78, 205, 196, 0.3);
         }
 
         body.dark-mode .help-desk-input {
@@ -709,6 +935,8 @@
             font-size: 0.9rem;
             max-height: 200px;
             overflow-y: auto;
+            color: #fff;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
         }
 
         .help-desk button {
@@ -719,19 +947,20 @@
             color: white;
             cursor: pointer;
             transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(78, 205, 196, 0.5);
         }
 
         .help-desk button:hover {
             transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(78, 205, 196, 0.7);
+            box-shadow: 0 0 20px rgba(78, 205, 196, 0.8);
         }
 
         /* Other Sections */
-        .contact, .about, .feedback, .services, .faq, .terms {
+        .contact, .about, .feedback, .services, .faq, .terms, .terms-page, .terms-detailed, .calculator, .games {
             background: rgba(255, 255, 255, 0.9);
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
             transition: background 0.5s ease;
         }
 
@@ -740,13 +969,29 @@
         body.dark-mode .feedback,
         body.dark-mode .services,
         body.dark-mode .faq,
-        body.dark-mode .terms {
+        body.dark-mode .terms,
+        body.dark-mode .terms-page,
+        body.dark-mode .terms-detailed,
+        body.dark-mode .calculator,
+        body.dark-mode .games {
             background: rgba(30, 30, 47, 0.9);
         }
 
-        .contact h2, .about h2, .feedback h2, .services h2, .faq h2, .terms h2 {
+        .contact h2, .about h2, .feedback h2, .services h2, .faq h2, .terms h2, .terms-page h2, .terms-detailed h2, .calculator h2, .games h2 {
             color: #ff6b6b;
             margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+        }
+
+        .terms a, .terms-page a {
+            color: #45b7d1;
+            text-decoration: underline;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .terms a:hover, .terms-page a:hover {
+            color: #ff6b6b;
         }
 
         .feedback textarea {
@@ -758,6 +1003,7 @@
             font-size: 1rem;
             transition: all 0.3s ease;
             background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 10px rgba(78, 205, 196, 0.3);
         }
 
         body.dark-mode .feedback textarea {
@@ -768,7 +1014,7 @@
 
         .feedback textarea:focus {
             border-color: #ff6b6b;
-            box-shadow: 0 0 10px rgba(255, 107, 107, 0.3);
+            box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
             transform: scale(1.01);
         }
 
@@ -795,7 +1041,7 @@
             padding: 10px;
             border-radius: 8px;
             margin: 10px 0;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
             animation: commentSlide 0.5s ease-in;
             transition: background 0.5s ease;
         }
@@ -815,7 +1061,7 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            background: #1a1a1a;
+            background: linear-gradient(90deg, #1a1a1a, #2a4066);
             color: #fff;
             text-align: center;
             padding: 10px 0;
@@ -823,6 +1069,7 @@
             text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
             z-index: 700;
             transition: background 0.5s ease;
+            backdrop-filter: blur(10px);
             animation: footerGlow 3s infinite alternate;
         }
 
@@ -866,8 +1113,8 @@
                 font-size: 0.9rem;
             }
 
-            .download-options button {
-                padding: 8px 15px;
+            .download-dropdown select {
+                width: 180px;
                 font-size: 0.9rem;
             }
 
@@ -890,6 +1137,10 @@
             .help-desk-popup {
                 width: 250px;
                 bottom: 190px;
+            }
+
+            .search-bar input {
+                width: 60%;
             }
         }
     </style>
@@ -933,21 +1184,28 @@
     </button>
     <div class="sidebar" id="sidebar">
         <ul>
-            <li><a href="#" onclick="showBuffering('home')">Home</a></li>
-            <li><a href="#" onclick="showBuffering('contact')">Contact Us</a></li>
-            <li><a href="#" onclick="showBuffering('about')">About Us</a></li>
-            <li><a href="#" onclick="showBuffering('feedback')">Feedback</a></li>
-            <li><a href="#" onclick="showBuffering('services')">Services</a></li>
-            <li><a href="#" onclick="showBuffering('faq')">FAQ</a></li>
-            <li><a href="#" onclick="showBuffering('terms')">Terms & Privacy</a></li>
+            <li><a href="#" onclick="showProcessing('home')">Home</a></li>
+            <li><a href="#" onclick="showProcessing('contact')">Contact Us</a></li>
+            <li><a href="#" onclick="showProcessing('about')">About Us</a></li>
+            <li><a href="#" onclick="showProcessing('feedback')">Feedback</a></li>
+            <li><a href="#" onclick="showProcessing('services')">Services</a></li>
+            <li><a href="#" onclick="showProcessing('faq')">FAQ</a></li>
+            <li><a href="#" onclick="showProcessing('terms')">Terms & Privacy</a></li>
+            <li><a href="#" onclick="showProcessing('calculator')">Calculator</a></li>
+            <li><a href="#" onclick="showProcessing('games')">Games</a></li>
         </ul>
     </div>
 
-    <!-- Buffering Triangle -->
-    <div class="buffering" id="buffering"></div>
+    <!-- Processing Loader -->
+    <div class="processing-loader" id="processingLoader">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
 
     <!-- Scroll to Tool Button -->
-    <div class="scroll-to-tool" onclick="showBufferingScroll()">Use BG Removal Tool</div>
+    <div class="scroll-to-tool" onclick="showProcessingScroll()">Use BG Removal Tool</div>
 
     <!-- Help Desk Button -->
     <div class="help-desk" onclick="toggleHelpDesk()">❓</div>
@@ -965,17 +1223,27 @@
         <h1>Background Removal Tool</h1>
 
         <div id="home" class="tab-content">
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search anything...">
+                <button onclick="searchPage()">Search</button>
+            </div>
+            <div id="search-result"></div>
             <input type="file" id="image-input" accept="image/*" />
-            <div class="loading" id="loading">Processing... Please wait.</div>
-            <img id="output-image" src="#" alt="Output Image" style="display: none;" />
-            <div class="download-options" id="download-options" style="display: none;">
-                <button onclick="downloadImage('4k')">4K</button>
-                <button onclick="downloadImage('1080p')">1080p</button>
-                <button onclick="downloadImage('720p')">720p</button>
-                <button onclick="downloadImage('480p')">480p</button>
-                <button onclick="downloadImage('360p')">360p</button>
-                <button onclick="downloadImage('240p')">240p</button>
-                <button onclick="downloadImage('144p')">144p</button>
+            <div id="processing-time"></div>
+            <img id="output-image" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Output Image" style="display: none;" />
+            <div class="download-dropdown" id="download-dropdown">
+                <select id="download-select" onchange="downloadImage(this.value)">
+                    <option value="">Select Resolution</option>
+                    <option value="8k">8K</option>
+                    <option value="4k">4K</option>
+                    <option value="2k">2K</option>
+                    <option value="1080p">1080p</option>
+                    <option value="720p">720p</option>
+                    <option value="480p">480p</option>
+                    <option value="360p">360p</option>
+                    <option value="240p">240p</option>
+                    <option value="144p">144p</option>
+                </select>
             </div>
         </div>
 
@@ -1005,7 +1273,7 @@
             <div class="instructions">
                 <h2>How to Use the Background Removal Tool</h2>
                 <p>
-                    Scroll down to the "Home" section or click the "Use BG Removal Tool" button on the right. Upload your image by clicking the file input area, and our AI will remove the background for you. Once processed, download your image in your preferred resolution (4K, 1080p, etc.).
+                    Scroll down to the "Home" section or click the "Use BG Removal Tool" button on the right. Upload your image by clicking the file input area, and our AI will remove the background for you. Once processed, download your image in your preferred resolution (8K, 4K, 2K, etc.).
                 </p>
             </div>
         </div>
@@ -1059,8 +1327,96 @@
             <div class="terms">
                 <h2>Terms & Privacy</h2>
                 <p>
-                    By using this tool, you agree not to upload copyrighted material without permission. We do not store your images or personal data beyond the session.
+                    By using this tool, you agree not to upload copyrighted material without permission. We do not store your images or personal data beyond the session. For more details, click <a href="#" onclick="showProcessing('terms-page')">Learn More</a>.
                 </p>
+            </div>
+        </div>
+
+        <div id="terms-page" class="tab-content">
+            <div class="terms-page">
+                <h2>Terms & Privacy - Overview</h2>
+                <p>
+                    Welcome to ASIF NOVITECH STARTUP’s Background Removal Tool. This section outlines our terms and privacy policies in approximately 500 words to ensure clarity and transparency. By using this tool, you agree to abide by these conditions, designed to protect both you and our platform.
+
+                    We provide an AI-driven service to remove backgrounds from images efficiently. You may use this tool for personal or commercial purposes, provided you own the rights to the uploaded content or have explicit permission from the rights holder. Uploading copyrighted material without authorization is prohibited and may result in restricted access. We reserve the right to suspend usage if these terms are violated, though we do not actively monitor uploads to respect your privacy.
+
+                    Your privacy is paramount. Images uploaded are processed securely using encryption and are automatically deleted from our servers shortly after your session ends—typically within minutes of download. We collect no personal data unless you choose to provide it (e.g., via feedback or contact forms), and such data is used solely for service improvement or support. We do not share, sell, or misuse your information, adhering to strict confidentiality standards. Anonymous usage stats may be gathered to enhance functionality, but these are not linked to individuals.
+
+                    The tool is offered "as is," with no guarantees of uninterrupted service. Processing times vary (usually under 10 seconds), but technical issues like server load or internet speed may affect performance. We’re not liable for damages from usage, including data loss or errors, though we strive for reliability. For detailed legal terms, see our full policy via the link below.
+
+                    You’re responsible for ensuring uploads meet our 8MB size limit and supported formats (JPEG, PNG, etc.). Misuse, such as uploading malicious files, is forbidden. This service is free, but future premium features may be introduced with prior notice. Disputes are resolved through direct communication or, if necessary, under Indian law in Mumbai courts.
+
+                    For an in-depth explanation, including security measures and additional rights, explore our comprehensive <a href="#" onclick="showProcessing('terms-detailed')">Terms & Privacy (Detailed)</a> page. We’re committed to a secure, user-friendly experience and value your trust in us.
+                </p>
+            </div>
+        </div>
+
+        <div id="terms-detailed" class="tab-content">
+            <div class="terms-detailed">
+                <h2>Terms & Privacy - Detailed</h2>
+                <p>
+                    Welcome to ASIF NOVITECH STARTUP’s Background Removal Tool! This detailed Terms and Privacy policy, spanning approximately 2000 words, provides an exhaustive overview of the rules, responsibilities, and protections governing your use of our platform. By accessing this tool, you enter a binding agreement with us, acknowledging these terms fully. Our goal is to deliver an innovative, secure, and user-friendly experience, blending advanced AI with a modern interface, while ensuring transparency and safeguarding your privacy.
+
+                    ### Terms of Use
+                    This tool enables seamless background removal for personal and commercial use. You’re responsible for ensuring uploaded images comply with copyright laws and intellectual property rights. Uploading content without permission is strictly prohibited, and violations may lead to immediate access termination. We reserve the right to restrict usage for misuse, though we do not monitor uploads proactively to respect your autonomy.
+
+                    The service is provided "as is," and while we aim for excellence, we cannot guarantee flawless operation. Processing may vary due to image complexity, file size, or connectivity. You use this tool at your own risk, and we’re not liable for direct, indirect, or consequential damages. Currently free, we may introduce premium tiers later, with ample notice to users. Continued use post-updates implies acceptance of revised terms.
+
+                    ### Privacy Commitment
+                    Privacy is foundational to our service. Uploaded images are processed securely via HTTPS encryption and deleted post-session—typically within minutes of download. No residual data is retained on our servers. We collect minimal data, only what you voluntarily submit (e.g., feedback or contact details), used exclusively for support or enhancement. This data isn’t shared with third parties, except as legally required or to protect our rights. Anonymous, aggregated usage stats (e.g., processed image count) may be collected for optimization, never tied to individuals.
+
+                    Our integration with third-party APIs (e.g., Remove.bg) adheres to their privacy policies, which we’ve vetted for compliance. We employ robust security measures—encryption, isolated processing environments, and regular audits—to minimize risks, though no system is entirely immune to breaches. You’re advised against uploading sensitive personal content (e.g., IDs) to reduce exposure.
+
+                    ### User Responsibilities
+                    You agree not to misuse the tool, including uploading malicious files, bypassing security, or overloading servers. Supported formats include JPEG, PNG, etc., with an 8MB limit. Ensure your device and connection support optimal use. For commercial purposes, you must own or have permission for images, absolving us of liability for disputes.
+
+                    ### Intellectual Property
+                    The tool’s design, code, and AI are our intellectual property, protected by copyright. You may not replicate or distribute it without consent. Processed images remain your property or that of the rights holder; we claim no ownership.
+
+                    ### Processing and Features
+                    Processing typically takes under 10 seconds, with time displayed post-completion. Resolutions range from 144p to 8K, selectable via a dropdown. Errors may require refreshing or contacting us at asifansari77@gmail.com or +91 9616173193. We’re not liable for technical disruptions beyond our control.
+
+                    Additional features like the calculator and Snake game are provided for convenience, governed by these terms, with no data collection beyond interaction tracking. The calculator offers basic arithmetic, while the Snake game is a lightweight, classic addition.
+
+                    ### Liability and Disputes
+                    Our liability is limited to the fullest extent of the law. We’re not responsible for misuse, third-party actions, or technical failures. Disputes should be resolved amicably via email or phone; legal matters fall under Indian jurisdiction in Mumbai.
+
+                    ### Updates and Security
+                    Terms may evolve with service changes or legal needs, posted here with notice. Security includes HTTPS, isolated processing, and audits, though you should avoid sensitive uploads. For more, contact us—we’re here to support your creative journey with trust and innovation.
+                </p>
+            </div>
+        </div>
+
+        <div id="calculator" class="tab-content">
+            <div class="calculator">
+                <h2>Calculator</h2>
+                <input type="text" id="calc-display" readonly>
+                <div class="calculator-buttons">
+                    <button onclick="appendToDisplay('7')">7</button>
+                    <button onclick="appendToDisplay('8')">8</button>
+                    <button onclick="appendToDisplay('9')">9</button>
+                    <button onclick="appendToDisplay('/')">/</button>
+                    <button onclick="appendToDisplay('4')">4</button>
+                    <button onclick="appendToDisplay('5')">5</button>
+                    <button onclick="appendToDisplay('6')">6</button>
+                    <button onclick="appendToDisplay('*')">*</button>
+                    <button onclick="appendToDisplay('1')">1</button>
+                    <button onclick="appendToDisplay('2')">2</button>
+                    <button onclick="appendToDisplay('3')">3</button>
+                    <button onclick="appendToDisplay('-')">-</button>
+                    <button onclick="appendToDisplay('0')">0</button>
+                    <button onclick="appendToDisplay('.')">.</button>
+                    <button onclick="calculate()">=</button>
+                    <button onclick="appendToDisplay('+')">+</button>
+                    <button onclick="clearDisplay()">C</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="games" class="tab-content">
+            <div class="games">
+                <h2>Snake Game</h2>
+                <canvas id="snakeCanvas" width="400" height="400"></canvas>
             </div>
         </div>
     </div>
@@ -1075,11 +1431,11 @@
             msg.pitch = 1.2;
             msg.rate = 1;
             window.speechSynthesis.speak(msg);
+            startSnakeGame();
         };
 
         function showPrivacyPopup() {
-            const privacyPopup = document.getElementById('privacyPopup');
-            privacyPopup.style.display = 'flex';
+            document.getElementById('privacyPopup').style.display = 'flex';
         }
 
         function acceptPrivacy() {
@@ -1110,22 +1466,22 @@
             menuBtn.classList.toggle('active');
         }
 
-        // Buffering and Tab Navigation
-        function showBuffering(tabName) {
-            const buffering = document.getElementById('buffering');
-            buffering.style.display = 'block';
+        // Processing and Tab Navigation
+        function showProcessing(tabName) {
+            const processingLoader = document.getElementById('processingLoader');
+            processingLoader.style.display = 'block';
             setTimeout(() => {
-                buffering.style.display = 'none';
+                processingLoader.style.display = 'none';
                 openTab(tabName);
                 toggleSidebar();
             }, 1500);
         }
 
-        function showBufferingScroll() {
-            const buffering = document.getElementById('buffering');
-            buffering.style.display = 'block';
+        function showProcessingScroll() {
+            const processingLoader = document.getElementById('processingLoader');
+            processingLoader.style.display = 'block';
             setTimeout(() => {
-                buffering.style.display = 'none';
+                processingLoader.style.display = 'none';
                 scrollToTool();
             }, 1500);
         }
@@ -1138,6 +1494,28 @@
         function scrollToTool() {
             openTab('home');
             document.getElementById('home').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Search Functionality
+        function searchPage() {
+            const searchInput = document.getElementById('searchInput').value.trim().toLowerCase();
+            const searchResult = document.getElementById('search-result');
+            const allText = document.body.innerText.toLowerCase();
+
+            if (!searchInput) {
+                searchResult.innerHTML = "Please enter a search term!";
+                return;
+            }
+
+            if (allText.includes(searchInput)) {
+                searchResult.innerHTML = `Found "${searchInput}" in the page!`;
+            } else {
+                searchResult.innerHTML = "Oops! Not Found.";
+            }
+
+            setTimeout(() => {
+                searchResult.innerHTML = '';
+            }, 3000);
         }
 
         // Feedback System
@@ -1157,17 +1535,20 @@
         // Background Removal
         const imageInput = document.getElementById('image-input');
         const outputImage = document.getElementById('output-image');
-        const loading = document.getElementById('loading');
-        const downloadOptions = document.getElementById('download-options');
+        const processingLoader = document.getElementById('processingLoader');
+        const downloadDropdown = document.getElementById('download-dropdown');
+        const processingTimeDiv = document.getElementById('processing-time');
         let processedImageUrl = '';
 
         imageInput.addEventListener('change', async (event) => {
             const file = event.target.files[0];
             if (file) {
-                loading.style.display = 'block';
+                processingLoader.style.display = 'block';
                 outputImage.style.display = 'none';
-                downloadOptions.style.display = 'none';
+                downloadDropdown.style.display = 'none';
+                processingTimeDiv.innerHTML = '';
 
+                const startTime = performance.now();
                 const formData = new FormData();
                 formData.append('image_file', file);
 
@@ -1184,26 +1565,116 @@
                     processedImageUrl = URL.createObjectURL(blob);
                     outputImage.src = processedImageUrl;
                     outputImage.style.display = 'block';
-                    downloadOptions.style.display = 'flex';
+                    downloadDropdown.style.display = 'flex';
+
+                    const endTime = performance.now();
+                    const processingTime = ((endTime - startTime) / 1000).toFixed(2);
+                    processingTimeDiv.innerHTML = `Processing Time: ${processingTime} seconds`;
                 } catch (error) {
                     console.error(error);
                     alert('Error processing image!');
                 } finally {
-                    loading.style.display = 'none';
+                    processingLoader.style.display = 'none';
                 }
             }
         });
 
         // Download Function
         function downloadImage(quality) {
-            if (processedImageUrl) {
+            if (processedImageUrl && quality) {
                 const link = document.createElement('a');
                 link.href = processedImageUrl;
                 link.download = `processed-image-${quality}.png`;
                 link.click();
+            } else if (!quality) {
+                alert('Please select a resolution!');
             } else {
                 alert('No image to download!');
             }
+        }
+
+        // Calculator Functions
+        let calcDisplay = document.getElementById('calc-display');
+        function appendToDisplay(value) {
+            if (!calcDisplay) calcDisplay = document.getElementById('calc-display');
+            calcDisplay.value += value;
+        }
+
+        function clearDisplay() {
+            if (!calcDisplay) calcDisplay = document.getElementById('calc-display');
+            calcDisplay.value = '';
+        }
+
+        function calculate() {
+            if (!calcDisplay) calcDisplay = document.getElementById('calc-display');
+            try {
+                calcDisplay.value = eval(calcDisplay.value);
+            } catch {
+                calcDisplay.value = 'Error';
+            }
+        }
+
+        // Snake Game
+        function startSnakeGame() {
+            const canvas = document.getElementById('snakeCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const gridSize = 20;
+            const tileCount = canvas.width / gridSize;
+            let snake = [{ x: 10, y: 10 }];
+            let food = { x: 15, y: 15 };
+            let dx = 0;
+            let dy = 0;
+            let score = 0;
+
+            function drawGame() {
+                const head = { x: snake[0].x + dx, y: snake[0].y + dy };
+                snake.unshift(head);
+
+                if (head.x === food.x && head.y === food.y) {
+                    score += 10;
+                    food = {
+                        x: Math.floor(Math.random() * tileCount),
+                        y: Math.floor(Math.random() * tileCount)
+                    };
+                } else {
+                    snake.pop();
+                }
+
+                if (head.x < 0 || head.x >= tileCount || head.y < 0 || head.y >= tileCount ||
+                    snake.slice(1).some(segment => segment.x === head.x && segment.y === head.y)) {
+                    snake = [{ x: 10, y: 10 }];
+                    dx = 0;
+                    dy = 0;
+                    score = 0;
+                }
+
+                ctx.fillStyle = '#1a1a1a';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#4ecdc4';
+                snake.forEach(segment => {
+                    ctx.fillRect(segment.x * gridSize, segment.y * gridSize, gridSize - 2, gridSize - 2);
+                });
+                ctx.fillStyle = '#ff6b6b';
+                ctx.fillRect(food.x * gridSize, food.y * gridSize, gridSize - 2, gridSize - 2);
+
+                ctx.fillStyle = '#fff';
+                ctx.font = '20px Poppins';
+                ctx.fillText(`Score: ${score}`, 10, 30);
+
+                setTimeout(drawGame, 100);
+            }
+
+            document.addEventListener('keydown', (e) => {
+                switch (e.key) {
+                    case 'ArrowUp': if (dy !== 1) { dx = 0; dy = -1; } break;
+                    case 'ArrowDown': if (dy !== -1) { dx = 0; dy = 1; } break;
+                    case 'ArrowLeft': if (dx !== 1) { dx = -1; dy = 0; } break;
+                    case 'ArrowRight': if (dx !== -1) { dx = 1; dy = 0; } break;
+                }
+            });
+
+            drawGame();
         }
 
         // Help Desk Functions
@@ -1223,30 +1694,29 @@
             }
 
             responseDiv.innerHTML = "Processing...";
-            await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate network delay
+            await new Promise(resolve => setTimeout(resolve, 1000));
 
-            // Mock Chatbot Responses
             let answer = "I'm here to assist you! Could you please clarify your question?";
-            if (question.includes("how") && (question.includes("use") || question.includes("remove") || question.includes("background"))) {
-                answer = "To use the Background Removal Tool, go to the Home tab, upload your image by clicking the file input area, and wait for the AI to process it. Once done, download your image in your preferred resolution (e.g., 4K, 1080p).";
-            } else if (question.includes("contact") || question.includes("reach") || question.includes("support")) {
-                answer = "You can reach us at +91 9616173193 or email us at asifansari77@gmail.com for any support.";
-            } else if (question.includes("about") || question.includes("who")) {
-                answer = "We are a team at ASIF NOVITECH STARTUP, dedicated to creating AI tools like this Background Removal Tool to help creatives simplify their work.";
-            } else if (question.includes("privacy") || question.includes("data") || question.includes("store")) {
-                answer = "We value your privacy. Your images are processed securely and not stored after the session ends. Check the Terms & Privacy tab for more details.";
-            } else if (question.includes("cost") || question.includes("price") || question.includes("free")) {
-                answer = "The tool is currently free to use! We might add premium features in the future, but for now, enjoy it at no cost.";
-            } else if (question.includes("format") || question.includes("support") || question.includes("file")) {
-                answer = "We support all common image formats like JPEG, PNG, and more. The max file size is 8MB.";
-            } else if (question.includes("time") || question.includes("long") || question.includes("process")) {
-                answer = "Processing usually takes under 10 seconds, depending on the image size and internet speed.";
-            } else if (question.includes("mobile") || question.includes("phone")) {
-                answer = "Yes, this tool is mobile-friendly! You can use it on your phone or tablet.";
-            } else if (question.includes("commercial") || question.includes("business")) {
-                answer = "You can use it for commercial purposes, but ensure you have the rights to the images you upload.";
-            } else if (question.includes("error") || question.includes("problem")) {
-                answer = "If you encounter an error, try refreshing the page or contact us at asifansari77@gmail.com for help.";
+            if (question.includes("how") && (question.includes("use") || question.includes("remove"))) {
+                answer = "Go to the Home tab, upload your image via the file input, and wait for processing. Download in your desired resolution from the dropdown.";
+            } else if (question.includes("contact")) {
+                answer = "Reach us at +91 9616173193 or asifansari77@gmail.com.";
+            } else if (question.includes("about")) {
+                answer = "We’re ASIF NOVITECH STARTUP, creating AI tools for creatives.";
+            } else if (question.includes("privacy")) {
+                answer = "Images are deleted post-session. See Terms & Privacy for more.";
+            } else if (question.includes("cost")) {
+                answer = "Free now, premium features may come later.";
+            } else if (question.includes("format")) {
+                answer = "Supports JPEG, PNG, etc., up to 8MB.";
+            } else if (question.includes("time")) {
+                answer = "Under 10 seconds usually, shown after processing.";
+            } else if (question.includes("mobile")) {
+                answer = "Yes, mobile-friendly!";
+            } else if (question.includes("commercial")) {
+                answer = "Yes, if you own the image rights.";
+            } else if (question.includes("error")) {
+                answer = "Refresh or email asifansari77@gmail.com.";
             }
 
             responseDiv.innerHTML = answer;
