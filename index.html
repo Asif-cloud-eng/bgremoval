@@ -16,6 +16,12 @@
             min-height: 100vh;
             overflow-x: hidden;
             background: linear-gradient(45deg, #1e1e2f, #2a4066);
+            transition: background 0.5s ease, color 0.5s ease;
+        }
+
+        body.dark-mode {
+            background: linear-gradient(45deg, #0a0a23, #1a1a1a);
+            color: #fff;
         }
 
         /* Header */
@@ -27,7 +33,7 @@
             background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #feca57);
             padding: 10px 0;
             z-index: 700;
-            overflow: hidden;
+            transition: background 0.5s ease;
         }
 
         .header marquee {
@@ -35,6 +41,38 @@
             font-size: 1.5rem;
             font-weight: bold;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            animation: marqueeGlow 3s infinite alternate;
+        }
+
+        @keyframes marqueeGlow {
+            from { text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+            to { text-shadow: 0 0 20px rgba(255, 255, 255, 0.8); }
+        }
+
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            padding: 10px;
+            background: #ff6b6b;
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            z-index: 600;
+            transition: transform 0.3s ease, background 0.5s ease;
+            animation: bounceToggle 2s infinite;
+        }
+
+        .dark-mode-toggle:hover {
+            transform: scale(1.1);
+            background: #4ecdc4;
+        }
+
+        @keyframes bounceToggle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
         }
 
         /* Welcome Screen */
@@ -50,12 +88,17 @@
             align-items: center;
             flex-direction: column;
             z-index: 1000;
-            animation: fadeInWelcome 1s ease-in;
+            animation: fadeInWelcome 1s ease-in-out;
         }
 
         @keyframes fadeInWelcome {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
         }
 
         .space-scene {
@@ -65,6 +108,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            overflow: hidden;
         }
 
         .sun {
@@ -76,12 +120,18 @@
             background: radial-gradient(circle, #fff 10%, #ffeb3b 40%, transparent 70%);
             border-radius: 50%;
             box-shadow: 0 0 50px #ffeb3b, 0 0 100px #fff176;
-            animation: glowSun 2s infinite alternate;
+            animation: glowSun 2s infinite alternate, floatSun 4s infinite ease-in-out;
         }
 
         @keyframes glowSun {
             from { box-shadow: 0 0 50px #ffeb3b, 0 0 100px #fff176; }
             to { box-shadow: 0 0 70px #ffeb3b, 0 0 150px #fff176; }
+        }
+
+        @keyframes floatSun {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+            100% { transform: translateY(0) rotate(0deg); }
         }
 
         .earth {
@@ -96,17 +146,17 @@
         }
 
         @keyframes orbitEarth {
-            0% { transform: translateX(-150px) translateY(0); }
-            25% { transform: translateX(0) translateY(-150px); }
-            50% { transform: translateX(150px) translateY(0); }
-            75% { transform: translateX(0) translateY(150px); }
-            100% { transform: translateX(-150px) translateY(0); }
+            0% { transform: translateX(-150px) translateY(0) rotate(0deg); }
+            25% { transform: translateX(0) translateY(-150px) rotate(90deg); }
+            50% { transform: translateX(150px) translateY(0) rotate(180deg); }
+            75% { transform: translateX(0) translateY(150px) rotate(270deg); }
+            100% { transform: translateX(-150px) translateY(0) rotate(360deg); }
         }
 
         @keyframes strikeIn {
             0% { transform: scale(0) translateY(-100vh); opacity: 0; }
-            50% { transform: scale(1.2); opacity: 1; }
-            100% { transform: scale(1); }
+            50% { transform: scale(1.2) rotate(10deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0deg); }
         }
 
         .photo-frame {
@@ -118,7 +168,7 @@
             border: 5px solid #fff;
             border-radius: 15px;
             box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
-            animation: photoFloat 3s infinite ease-in-out;
+            animation: photoFloat 3s infinite ease-in-out, rotateFrame 12s infinite linear;
             z-index: 10;
         }
 
@@ -128,12 +178,17 @@
             100% { transform: translateY(0); }
         }
 
+        @keyframes rotateFrame {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(0) rotate(360deg); }
+        }
+
         .welcome-text {
             color: #fff;
             font-size: 2rem;
             margin-top: 20px;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-            animation: textGlow 2s infinite alternate;
+            animation: textGlow 2s infinite alternate, bounceText 1.5s infinite;
             z-index: 20;
             text-align: center;
         }
@@ -141,6 +196,11 @@
         @keyframes textGlow {
             from { text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
             to { text-shadow: 0 0 20px rgba(255, 255, 255, 0.8); }
+        }
+
+        @keyframes bounceText {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         .enter-btn {
@@ -152,13 +212,14 @@
             color: white;
             font-size: 1rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
             z-index: 20;
+            box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
         }
 
         .enter-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 20px rgba(255, 107, 107, 0.7);
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 0 25px rgba(255, 107, 107, 0.8);
         }
 
         /* Privacy Policy Popup */
@@ -169,10 +230,16 @@
             width: 100%;
             height: 100vh;
             background: rgba(0, 0, 0, 0.8);
-            display: flex;
+            display: none;
             justify-content: center;
             align-items: center;
             z-index: 2000;
+            animation: fadeInPopup 0.5s ease-in-out;
+        }
+
+        @keyframes fadeInPopup {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .privacy-content {
@@ -183,6 +250,18 @@
             width: 90%;
             text-align: center;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            animation: popIn 0.5s ease-out;
+            transition: background 0.5s ease;
+        }
+
+        body.dark-mode .privacy-content {
+            background: #1e1e2f;
+            color: #fff;
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.8) rotate(-10deg); opacity: 0; }
+            to { transform: scale(1) rotate(0deg); opacity: 1; }
         }
 
         .privacy-content h2 {
@@ -194,6 +273,11 @@
             font-size: 0.9rem;
             color: #333;
             margin-bottom: 20px;
+            transition: color 0.5s ease;
+        }
+
+        body.dark-mode .privacy-content p {
+            color: #fff;
         }
 
         .privacy-content button {
@@ -203,23 +287,24 @@
             border-radius: 20px;
             color: white;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
         }
 
         .privacy-content button:hover {
-            transform: scale(1.1);
+            transform: scale(1.1) rotate(-5deg);
+            box-shadow: 0 0 15px rgba(78, 205, 196, 0.7);
         }
 
         /* Sidebar */
         .sidebar {
             position: fixed;
-            top: 60px; /* Adjusted for header */
+            top: 60px;
             left: -250px;
             width: 250px;
             height: 100%;
-            background: linear-gradient(135deg, #ff6b6b, #4ecdc4, #feca57);
-            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
-            transition: left 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* More fluid animation */
+            background: #1a1a1a;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+            transition: left 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
             z-index: 500;
         }
 
@@ -234,6 +319,21 @@
 
         .sidebar ul li {
             margin: 20px 0;
+            animation: slideInSidebar 0.5s ease-out forwards;
+            animation-delay: calc(var(--order) * 0.1s);
+        }
+
+        .sidebar ul li:nth-child(1) { --order: 1; }
+        .sidebar ul li:nth-child(2) { --order: 2; }
+        .sidebar ul li:nth-child(3) { --order: 3; }
+        .sidebar ul li:nth-child(4) { --order: 4; }
+        .sidebar ul li:nth-child(5) { --order: 5; }
+        .sidebar ul li:nth-child(6) { --order: 6; }
+        .sidebar ul li:nth-child(7) { --order: 7; }
+
+        @keyframes slideInSidebar {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
 
         .sidebar ul li a {
@@ -248,58 +348,92 @@
 
         .sidebar ul li a:hover {
             background: rgba(255, 255, 255, 0.2);
-            transform: translateX(10px);
+            transform: translateX(10px) scale(1.05);
         }
 
         .menu-btn {
             position: fixed;
-            top: 70px; /* Adjusted for header */
+            top: 70px;
             left: 20px;
-            font-size: 1.5rem;
+            width: 40px;
+            height: 30px;
             background: none;
             border: none;
-            color: #fff;
             cursor: pointer;
             z-index: 600;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s ease;
         }
 
-        /* Buffering Circle */
+        .menu-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .menu-btn span {
+            width: 100%;
+            height: 4px;
+            background: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(10px, 10px);
+        }
+
+        .menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(10px, -10px);
+        }
+
+        /* Buffering Triangle */
         .buffering {
             position: fixed;
             top: 50%;
             left: 50%;
-            width: 50px;
-            height: 50px;
-            border: 5px solid #ff6b6b;
-            border-top: 5px solid transparent;
-            border-radius: 50%;
-            animation: spin 1s linear;
+            width: 0;
+            height: 0;
+            border-left: 25px solid transparent;
+            border-right: 25px solid transparent;
+            border-bottom: 50px solid #ff6b6b;
             transform: translate(-50%, -50%);
             z-index: 1000;
             display: none;
+            animation: trianglePulse 1.5s ease-in-out infinite;
         }
 
-        @keyframes spin {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        @keyframes trianglePulse {
+            0% { transform: translate(-50%, -50%) scale(1) rotate(0deg); opacity: 1; }
+            50% { transform: translate(-50%, -50%) scale(1.3) rotate(180deg); opacity: 0.6; }
+            100% { transform: translate(-50%, -50%) scale(1) rotate(360deg); opacity: 1; }
         }
 
         /* Main Container */
         .container {
             max-width: 1000px;
-            margin: 80px auto 20px; /* Adjusted for header */
+            margin: 80px auto 60px;
             padding: 20px;
             background: rgba(255, 255, 255, 0.95);
             border-radius: 15px;
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
             animation: floatIn 1s ease-out;
             display: none;
-            min-height: calc(100vh - 100px);
+            min-height: calc(100vh - 140px);
+            transition: background 0.5s ease, color 0.5s ease;
+        }
+
+        body.dark-mode .container {
+            background: rgba(30, 30, 47, 0.95);
+            color: #fff;
         }
 
         @keyframes floatIn {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            from { transform: translateY(50px) rotate(2deg); opacity: 0; }
+            to { transform: translateY(0) rotate(0deg); opacity: 1; }
         }
 
         h1 {
@@ -307,13 +441,18 @@
             font-size: 2.5rem;
             text-align: center;
             margin-bottom: 20px;
-            animation: pulseTitle 2s infinite;
+            animation: pulseTitle 2s infinite, glowTitle 3s infinite alternate;
         }
 
         @keyframes pulseTitle {
             0% { transform: scale(1); }
             50% { transform: scale(1.05); }
             100% { transform: scale(1); }
+        }
+
+        @keyframes glowTitle {
+            from { text-shadow: 0 0 10px #ff6b6b; }
+            to { text-shadow: 0 0 20px #ff6b6b; }
         }
 
         /* Tab Content */
@@ -328,8 +467,8 @@
         }
 
         @keyframes slideUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            from { transform: translateY(20px) rotate(1deg); opacity: 0; }
+            to { transform: translateY(0) rotate(0deg); opacity: 1; }
         }
 
         /* About Tab */
@@ -347,11 +486,18 @@
             object-fit: cover;
             border-radius: 10px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: imageFadeIn 1s ease-in-out;
         }
 
         .about-images img:hover {
-            transform: scale(1.05);
+            transform: scale(1.1) rotate(3deg);
+            box-shadow: 0 0 25px rgba(255, 107, 107, 0.5);
+        }
+
+        @keyframes imageFadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         .instructions {
@@ -360,6 +506,11 @@
             background: rgba(255, 255, 255, 0.9);
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: background 0.5s ease;
+        }
+
+        body.dark-mode .instructions {
+            background: rgba(30, 30, 47, 0.9);
         }
 
         .instructions h2 {
@@ -371,6 +522,11 @@
             font-size: 1rem;
             color: #333;
             line-height: 1.5;
+            transition: color 0.5s ease;
+        }
+
+        body.dark-mode .instructions p {
+            color: #fff;
         }
 
         /* Home Tab */
@@ -385,9 +541,15 @@
             font-size: 1rem;
         }
 
+        body.dark-mode input[type="file"] {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #fff;
+        }
+
         input[type="file"]:hover {
             border-color: #ff6b6b;
             background: rgba(255, 107, 107, 0.1);
+            transform: scale(1.02);
         }
 
         #output-image {
@@ -399,8 +561,8 @@
         }
 
         @keyframes imagePop {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
+            from { transform: scale(0.8) rotate(-5deg); opacity: 0; }
+            to { transform: scale(1) rotate(0deg); opacity: 1; }
         }
 
         .loading {
@@ -409,7 +571,7 @@
             font-size: 1.2rem;
             color: #4ecdc4;
             text-align: center;
-            animation: pulse 1s infinite;
+            animation: pulse 1s infinite, spinText 2s infinite;
         }
 
         @keyframes pulse {
@@ -418,10 +580,15 @@
             100% { opacity: 1; }
         }
 
+        @keyframes spinText {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         .download-options {
             margin-top: 20px;
             display: flex;
-            justify-content:Maria: center;
+            justify-content: center;
             gap: 10px;
             flex-wrap: wrap;
         }
@@ -433,18 +600,19 @@
             border-radius: 25px;
             color: white;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            box-shadow: 0 0 10px rgba(254, 202, 87, 0.5);
         }
 
         .download-options button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(254, 202, 87, 0.5);
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 0 0 20px rgba(254, 202, 87, 0.8);
         }
 
         /* Scroll to Tool Button */
         .scroll-to-tool {
             position: fixed;
-            bottom: 20px;
+            bottom: 70px;
             right: 20px;
             width: 60px;
             height: 60px;
@@ -460,11 +628,102 @@
             box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
             transition: all 0.3s ease;
             z-index: 600;
+            animation: bounceScroll 2s infinite;
+        }
+
+        @keyframes bounceScroll {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         .scroll-to-tool:hover {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 0 25px rgba(255, 107, 107, 0.8);
+        }
+
+        /* Help Desk Styles */
+        .help-desk {
+            position: fixed;
+            bottom: 140px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(78, 205, 196, 0.5);
+            transition: all 0.3s ease;
+            z-index: 600;
+            animation: bounceHelp 2s infinite;
+        }
+
+        .help-desk:hover {
             transform: scale(1.1);
-            box-shadow: 0 0 20px rgba(255, 107, 107, 0.8);
+            box-shadow: 0 0 25px rgba(78, 205, 196, 0.8);
+        }
+
+        @keyframes bounceHelp {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .help-desk-popup {
+            position: fixed;
+            bottom: 200px;
+            right: 20px;
+            width: 300px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            display: none;
+            z-index: 700;
+            transition: background 0.5s ease;
+        }
+
+        body.dark-mode .help-desk-popup {
+            background: rgba(30, 30, 47, 0.95);
+            color: #fff;
+        }
+
+        .help-desk-input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 2px solid #4ecdc4;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        body.dark-mode .help-desk-input {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #fff;
+            color: #fff;
+        }
+
+        .help-desk-response {
+            font-size: 0.9rem;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .help-desk button {
+            padding: 8px 15px;
+            background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+            border: none;
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .help-desk button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(78, 205, 196, 0.7);
         }
 
         /* Other Sections */
@@ -473,6 +732,16 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: background 0.5s ease;
+        }
+
+        body.dark-mode .contact,
+        body.dark-mode .about,
+        body.dark-mode .feedback,
+        body.dark-mode .services,
+        body.dark-mode .faq,
+        body.dark-mode .terms {
+            background: rgba(30, 30, 47, 0.9);
         }
 
         .contact h2, .about h2, .feedback h2, .services h2, .faq h2, .terms h2 {
@@ -488,11 +757,19 @@
             resize: none;
             font-size: 1rem;
             transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        body.dark-mode .feedback textarea {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #fff;
+            color: #fff;
         }
 
         .feedback textarea:focus {
             border-color: #ff6b6b;
             box-shadow: 0 0 10px rgba(255, 107, 107, 0.3);
+            transform: scale(1.01);
         }
 
         .feedback button {
@@ -503,12 +780,14 @@
             border-radius: 25px;
             color: white;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            box-shadow: 0 0 10px rgba(78, 205, 196, 0.5);
         }
 
         .feedback button:hover {
             background: linear-gradient(45deg, #45b7d1, #4ecdc4);
-            transform: translateY(-3px);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 0 20px rgba(78, 205, 196, 0.8);
         }
 
         .comment-view li {
@@ -518,26 +797,44 @@
             margin: 10px 0;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
             animation: commentSlide 0.5s ease-in;
+            transition: background 0.5s ease;
+        }
+
+        body.dark-mode .comment-view li {
+            background: rgba(30, 30, 47, 0.8);
         }
 
         @keyframes commentSlide {
-            from { transform: translateX(-20px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+            from { transform: translateX(-20px) rotate(-2deg); opacity: 0; }
+            to { transform: translateX(0) rotate(0deg); opacity: 1; }
         }
 
+        /* Footer */
         footer {
-            text-align: center;
-            margin-top: 20px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #1a1a1a;
             color: #fff;
+            text-align: center;
+            padding: 10px 0;
             font-size: 0.9rem;
             text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
-            padding-bottom: 20px;
+            z-index: 700;
+            transition: background 0.5s ease;
+            animation: footerGlow 3s infinite alternate;
+        }
+
+        @keyframes footerGlow {
+            from { text-shadow: 0 0 5px rgba(255, 255, 255, 0.3); }
+            to { text-shadow: 0 0 10px rgba(255, 255, 255, 0.6); }
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
             .container {
-                margin: 60px 10px 10px;
+                margin: 60px 10px 60px;
                 padding: 15px;
             }
 
@@ -583,6 +880,16 @@
                 width: 50px;
                 height: 50px;
                 font-size: 0.8rem;
+                bottom: 70px;
+            }
+
+            .help-desk {
+                bottom: 130px;
+            }
+
+            .help-desk-popup {
+                width: 250px;
+                bottom: 190px;
             }
         }
     </style>
@@ -592,6 +899,9 @@
     <div class="header">
         <marquee>ASIF NOVITECH STARTUP</marquee>
     </div>
+
+    <!-- Dark Mode Toggle -->
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">🌙</button>
 
     <!-- Welcome Screen -->
     <div class="welcome-screen" id="welcomeScreen">
@@ -605,7 +915,7 @@
     </div>
 
     <!-- Privacy Policy Popup -->
-    <div class="privacy-popup" id="privacyPopup" style="display: none;">
+    <div class="privacy-popup" id="privacyPopup">
         <div class="privacy-content">
             <h2>Privacy Policy</h2>
             <p>
@@ -616,7 +926,11 @@
     </div>
 
     <!-- Sidebar -->
-    <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+    <button class="menu-btn" onclick="toggleSidebar()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
     <div class="sidebar" id="sidebar">
         <ul>
             <li><a href="#" onclick="showBuffering('home')">Home</a></li>
@@ -629,11 +943,22 @@
         </ul>
     </div>
 
-    <!-- Buffering Circle -->
+    <!-- Buffering Triangle -->
     <div class="buffering" id="buffering"></div>
 
     <!-- Scroll to Tool Button -->
     <div class="scroll-to-tool" onclick="showBufferingScroll()">Use BG Removal Tool</div>
+
+    <!-- Help Desk Button -->
+    <div class="help-desk" onclick="toggleHelpDesk()">❓</div>
+
+    <!-- Help Desk Popup -->
+    <div class="help-desk-popup" id="helpDeskPopup">
+        <h3>Quick Help Desk</h3>
+        <input type="text" class="help-desk-input" id="helpInput" placeholder="Ask anything...">
+        <button onclick="getHelpResponse()">Ask</button>
+        <div class="help-desk-response" id="helpResponse"></div>
+    </div>
 
     <!-- Main Content -->
     <div class="container" id="mainContent">
@@ -670,11 +995,11 @@
                     We are a team dedicated to providing innovative AI tools for creatives. Our Background Removal Tool is designed to simplify your editing process with cutting-edge technology.
                 </p>
                 <div class="about-images">
-                    <img src="https://images.unsplash.com/photo-1501854140801-50d01698902b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Nature">
-                    <img src="https://images.unsplash.com/photo-1519125323398-675f1f1dcdf8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="City">
-                    <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c221e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Landscape">
-                    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Beach">
-                    <img src="https://images.unsplash.com/photo-1480714378408-67cf0d13e820?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Portrait">
+                    <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1350&auto=format&fit=crop" alt="Tech Forest">
+                    <img src="https://images.unsplash.com/photo-1508739773434-c26b3d09e071?q=80&w=1350&auto=format&fit=crop" alt="Digital Nature">
+                    <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=1350&auto=format&fit=crop" alt="Tech Landscape">
+                    <img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?q=80&w=1350&auto=format&fit=crop" alt="Futuristic Nature">
+                    <img src="https://images.unsplash.com/photo-1518770660439-94fc4d907b82?q=80&w=1350&auto=format&fit=crop" alt="Creative Tech">
                 </div>
             </div>
             <div class="instructions">
@@ -738,9 +1063,10 @@
                 </p>
             </div>
         </div>
-
-        <footer>ASIF ANSARI © Copyright Protected 2025</footer>
     </div>
+
+    <!-- Footer -->
+    <footer>ASIF ANSARI © Copyright Protected 2025</footer>
 
     <script>
         // Welcome Screen and Speech
@@ -752,23 +1078,36 @@
         };
 
         function showPrivacyPopup() {
-            document.getElementById('privacyPopup').style.display = 'flex';
+            const privacyPopup = document.getElementById('privacyPopup');
+            privacyPopup.style.display = 'flex';
         }
 
         function acceptPrivacy() {
-            document.getElementById('privacyPopup').style.display = 'none';
+            const privacyPopup = document.getElementById('privacyPopup');
             const welcomeScreen = document.getElementById('welcomeScreen');
             const mainContent = document.getElementById('mainContent');
-            welcomeScreen.style.animation = 'fadeOut 0.5s ease-out forwards';
+
+            privacyPopup.style.display = 'none';
+            welcomeScreen.style.animation = 'fadeOut 0.5s ease-out';
             setTimeout(() => {
                 welcomeScreen.style.display = 'none';
                 mainContent.style.display = 'block';
             }, 500);
         }
 
+        // Dark Mode Toggle
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const toggleBtn = document.querySelector('.dark-mode-toggle');
+            toggleBtn.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+        }
+
         // Sidebar Toggle
         function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('active');
+            const sidebar = document.getElementById('sidebar');
+            const menuBtn = document.querySelector('.menu-btn');
+            sidebar.classList.toggle('active');
+            menuBtn.classList.toggle('active');
         }
 
         // Buffering and Tab Navigation
@@ -779,7 +1118,7 @@
                 buffering.style.display = 'none';
                 openTab(tabName);
                 toggleSidebar();
-            }, 1000);
+            }, 1500);
         }
 
         function showBufferingScroll() {
@@ -788,7 +1127,7 @@
             setTimeout(() => {
                 buffering.style.display = 'none';
                 scrollToTool();
-            }, 1000);
+            }, 1500);
         }
 
         function openTab(tabName) {
@@ -865,6 +1204,53 @@
             } else {
                 alert('No image to download!');
             }
+        }
+
+        // Help Desk Functions
+        function toggleHelpDesk() {
+            const popup = document.getElementById('helpDeskPopup');
+            popup.style.display = popup.style.display === 'block' ? 'none' : 'block';
+        }
+
+        async function getHelpResponse() {
+            const input = document.getElementById('helpInput');
+            const responseDiv = document.getElementById('helpResponse');
+            const question = input.value.trim().toLowerCase();
+
+            if (!question) {
+                responseDiv.innerHTML = "Please ask a question!";
+                return;
+            }
+
+            responseDiv.innerHTML = "Processing...";
+            await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate network delay
+
+            // Mock Chatbot Responses
+            let answer = "I'm here to assist you! Could you please clarify your question?";
+            if (question.includes("how") && (question.includes("use") || question.includes("remove") || question.includes("background"))) {
+                answer = "To use the Background Removal Tool, go to the Home tab, upload your image by clicking the file input area, and wait for the AI to process it. Once done, download your image in your preferred resolution (e.g., 4K, 1080p).";
+            } else if (question.includes("contact") || question.includes("reach") || question.includes("support")) {
+                answer = "You can reach us at +91 9616173193 or email us at asifansari77@gmail.com for any support.";
+            } else if (question.includes("about") || question.includes("who")) {
+                answer = "We are a team at ASIF NOVITECH STARTUP, dedicated to creating AI tools like this Background Removal Tool to help creatives simplify their work.";
+            } else if (question.includes("privacy") || question.includes("data") || question.includes("store")) {
+                answer = "We value your privacy. Your images are processed securely and not stored after the session ends. Check the Terms & Privacy tab for more details.";
+            } else if (question.includes("cost") || question.includes("price") || question.includes("free")) {
+                answer = "The tool is currently free to use! We might add premium features in the future, but for now, enjoy it at no cost.";
+            } else if (question.includes("format") || question.includes("support") || question.includes("file")) {
+                answer = "We support all common image formats like JPEG, PNG, and more. The max file size is 8MB.";
+            } else if (question.includes("time") || question.includes("long") || question.includes("process")) {
+                answer = "Processing usually takes under 10 seconds, depending on the image size and internet speed.";
+            } else if (question.includes("mobile") || question.includes("phone")) {
+                answer = "Yes, this tool is mobile-friendly! You can use it on your phone or tablet.";
+            } else if (question.includes("commercial") || question.includes("business")) {
+                answer = "You can use it for commercial purposes, but ensure you have the rights to the images you upload.";
+            } else if (question.includes("error") || question.includes("problem")) {
+                answer = "If you encounter an error, try refreshing the page or contact us at asifansari77@gmail.com for help.";
+            }
+
+            responseDiv.innerHTML = answer;
+            input.value = '';
         }
     </script>
 </body>
